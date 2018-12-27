@@ -1,6 +1,5 @@
 open String;
 open Str;
-
 type catergorizedtypes = {
   typelisp: string,
   value: string,
@@ -9,15 +8,11 @@ type catergorizedtypes = {
 type listOfCatergories = list(catergorizedtypes);
 
 let catergorize = (input: string) =>
-  switch (int_of_string(input)) {
-  | exception (Failure("float_of_string")) =>
-    if (input.[0] === '"') {
-      {typelisp: "token", value: ""};
-    } else {
-      {typelisp: "boo", value: "3"};
-    }
-  | _ => {typelisp: "literal", value: input}
-  };
+  string_match(regexp("\\-?\\d+"), input, 0) ?
+    {typelisp: "item", value: input} :
+    string_match(regexp("\\(\"\\)"), input, 0) ?
+      {typelisp: "literal", value: "\""} :
+      {typelisp: "identifier", value: input};
 
 let tokeniser = input =>
   input
@@ -26,20 +21,20 @@ let tokeniser = input =>
   |> trim
   |> split(regexp("\\(s\\)"));
 
-let rec parenthesise = (list: listOfCatergories, input: list(string)) =>
-  switch (List.hd(input)) {
+let rec parenthesise = (accumulator: listOfCatergories, tokenisedInput) =>
+  switch (List.hd(tokenisedInput)) {
   | "(" =>
     parenthesise(
-      List.append(list, parenthesise([], List.tl(input))),
-      List.tl(input),
+      List.append(accumulator, parenthesise([], List.tl(tokenisedInput))),
+      List.tl(tokenisedInput),
     )
-  | ")" => list
+  | ")" => accumulator
   | _ =>
     parenthesise(
-      List.append(list, [catergorize(List.hd(input))]),
-      List.tl(input),
+      List.append(accumulator, [catergorize(List.hd(tokenisedInput))]),
+      List.tl(tokenisedInput),
     )
   };
 
 let parse = (input: string) =>
-  tokeniser |> parenthesise([]) |> print_endline;
+  input |> tokeniser |> parenthesise([]);

@@ -7,6 +7,6 @@
    (name EsyPesyStarter)
    ; Other libraries list this name in their package.json 'requires' field to use this library.
    (public_name esy-pesy-starter.lib)
-   (libraries  str )
+   (libraries  str re )
    (c_names )  ; From package.json cNames field
 )

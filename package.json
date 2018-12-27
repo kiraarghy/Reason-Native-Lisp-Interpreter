@@ -21,7 +21,7 @@
     "library": {
       "name": "esy-pesy-starter.lib",
       "namespace": "EsyPesyStarter",
-      "require": ["str"]
+      "require": ["str", "re"]
     },
     "executable": {
       "require": [
@@ -39,7 +39,8 @@
     "@esy-ocaml/reason": "*",
     "refmterr": "*",
     "ocaml": "~4.6.0",
-    "pesy": "*"
+    "pesy": "*",
+    "ocamlRe": "*"
   },
   "devDependencies": {
     "@esy-ocaml/merlin": "*"
