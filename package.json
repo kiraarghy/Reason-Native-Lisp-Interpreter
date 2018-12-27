@@ -12,16 +12,21 @@
   },
   "buildDirs": {
     "test": {
-      "require": ["esy-pesy-starter.lib"],
+      "require": [
+        "esy-pesy-starter.lib"
+      ],
       "main": "TestEsyPesyStarter",
       "name": "TestEsyPesyStarter.exe"
     },
     "library": {
       "name": "esy-pesy-starter.lib",
-      "namespace": "EsyPesyStarter"
+      "namespace": "EsyPesyStarter",
+      "require": ["str"]
     },
     "executable": {
-      "require": ["esy-pesy-starter.lib"],
+      "require": [
+        "esy-pesy-starter.lib"
+      ],
       "main": "EsyPesyStarterApp",
       "name": "EsyPesyStarterApp.exe"
     }
