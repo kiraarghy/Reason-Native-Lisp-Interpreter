@@ -16,10 +16,10 @@ let catergorize = (input: string) =>
 
 let tokeniser = input =>
   input
-  |> global_replace(regexp("\\((\\)"), " ( ")
-  |> global_replace(regexp("\\()\\)"), " ) ")
+  |> global_replace(regexp("[\(]"), " ( ")
+  |> global_replace(regexp("[\)]"), " ) ")
   |> trim
-  |> split(regexp("\\(s\\)"));
+  |> split(regexp("[ \t]"));
 
 let rec parenthesise = (accumulator: listOfCatergories, tokenisedInput) =>
   switch (List.hd(tokenisedInput)) {
@@ -36,5 +36,7 @@ let rec parenthesise = (accumulator: listOfCatergories, tokenisedInput) =>
     )
   };
 
-let parse = (input: string) =>
+let parse = (input: string) => {
   input |> tokeniser |> parenthesise([]);
+  ();
+};
